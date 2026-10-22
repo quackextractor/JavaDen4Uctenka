@@ -8,6 +8,7 @@ a projekt dodrzuje [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.ht
 ## [Unreleased]
 
 ## [0.5.0] - 2026-10-22
+
 ### Changed
 
 - Zaznamy (record) `Item` a `Shop` nahrazeny beznymi tridami s gettery (LostSoul).
