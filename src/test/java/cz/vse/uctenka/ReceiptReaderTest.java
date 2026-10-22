@@ -2,10 +2,17 @@ package cz.vse.uctenka;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.StringReader;
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReceiptReaderTest {
     private final Shop shop = new Shop("Trafika", "", "", "", 21, "");
@@ -27,6 +34,17 @@ class ReceiptReaderTest {
         assertNull(ReceiptReader.parseMoney("1e50", 7));
         assertNull(ReceiptReader.parseMoney("12345678", 7));
         assertEquals(new BigDecimal("9999999.99"), ReceiptReader.parseMoney("9999999,99", 7));
+    }
+
+    @Test
+    void parseMoneyAcceptsOnlyPlainDigits() {
+        assertNull(ReceiptReader.parseMoney("+5", 7));
+        assertNull(ReceiptReader.parseMoney("-5", 7));
+        assertNull(ReceiptReader.parseMoney(".5", 7));
+        assertNull(ReceiptReader.parseMoney("5.", 7));
+        assertNull(ReceiptReader.parseMoney("١٢", 7));
+        assertNull(ReceiptReader.parseMoney("１２", 7));
+        assertEquals(new BigDecimal("0.50"), ReceiptReader.parseMoney("0,50", 7));
     }
 
     @Test
@@ -68,5 +86,11 @@ class ReceiptReaderTest {
         assertTrue(output.toString().contains("Zadejte castku aspon 35,40."));
         assertEquals(new BigDecimal("35.40"), reader("35,40\n").readPaid(new BigDecimal("35.40")));
         assertNull(reader("").readPaid(BigDecimal.ONE));
+    }
+
+    @Test
+    void paidAcceptsTotalLongerThanLimit() throws IOException {
+        BigDecimal total = new BigDecimal("12345678901234567.00");
+        assertEquals(total, reader("12345678901234567,00\n").readPaid(total));
     }
 }

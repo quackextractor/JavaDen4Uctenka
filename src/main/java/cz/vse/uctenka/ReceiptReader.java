@@ -20,23 +20,20 @@ public class ReceiptReader {
     }
 
     /**
-     * Prevede text na castku, bere carku i tecku. Exponent neni povolen.
+     * Prevede text na castku, bere carku i tecku. Povolene jsou jen cifry 0-9,
+     * bez znamenka a exponentu.
      *
      * @param maxDigits max. pocet cifer pred carkou
      * @return castka nebo null kdyz to neni cislo s max. 2 desetinnymi misty
      */
     static BigDecimal parseMoney(String text, int maxDigits) {
         String number = text.trim().replace(',', '.');
-        if (number.contains("e") || number.contains("E")) {
+        // \d je v Jave jen ASCII, BigDecimal by jinak bral i arabske nebo plnosirkove cifry
+        if (!number.matches("\\d+(\\.\\d{1,2})?")) {
             return null;
         }
-        try {
-            BigDecimal value = new BigDecimal(number);
-            boolean ok = value.scale() <= 2 && value.precision() - value.scale() <= maxDigits;
-            return ok ? value : null;
-        } catch (NumberFormatException e) {
-            return null;
-        }
+        BigDecimal value = new BigDecimal(number);
+        return value.precision() - value.scale() <= maxDigits ? value : null;
     }
 
     /**
@@ -69,7 +66,9 @@ public class ReceiptReader {
      * @return zaplacena castka nebo null kdyz vstup skoncil
      */
     public BigDecimal readPaid(BigDecimal total) throws IOException {
-        return readMoney("Zaplaceno (celkem " + Receipt.money(total) + "): ", total, true, 15);
+        // limit nesmi byt mensi nez celkem, jinak by zadna platba neprosla
+        int maxDigits = Math.max(15, total.precision() - total.scale());
+        return readMoney("Zaplaceno (celkem " + Receipt.money(total) + "): ", total, true, maxDigits);
     }
 
     private Integer readQuantity() throws IOException {

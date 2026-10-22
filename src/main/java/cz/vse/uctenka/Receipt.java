@@ -15,6 +15,7 @@ import java.util.Locale;
 public class Receipt {
     public static final int WIDTH = 40;
     private static final DateTimeFormatter DATE = DateTimeFormatter.ofPattern("d.M.yyyy HH:mm");
+    private static final Locale CS = Locale.forLanguageTag("cs-CZ");
 
     private final Shop shop;
     private final List<Item> items = new ArrayList<>();
@@ -24,12 +25,14 @@ public class Receipt {
     }
 
     static String money(BigDecimal value) {
-        return String.format(Locale.forLanguageTag("cs-CZ"), "%.2f", value);
+        return String.format(CS, "%.2f", value);
     }
 
     private static void row(StringBuilder sb, String left, String right) {
-        left = cut(left, WIDTH - right.length() - 1);
-        sb.append(left).append(" ".repeat(WIDTH - left.length() - right.length())).append(right).append('\n');
+        // prilis dlouha prava cast radek prodlouzi, misto aby spadla
+        left = cut(left, Math.max(0, WIDTH - right.length() - 1));
+        int gap = Math.max(1, WIDTH - left.length() - right.length());
+        sb.append(left).append(" ".repeat(gap)).append(right).append('\n');
     }
 
     private static void center(StringBuilder sb, String text) {

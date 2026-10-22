@@ -36,7 +36,9 @@ class ShopTest {
 
     @Test
     void loadsTheBundledFile() throws IOException {
-        assertEquals("Trafika U Rohu", Shop.load(Path.of("obchod.properties")).getName());
+        Shop shop = Shop.load(Path.of("obchod.properties"));
+        assertEquals("BILLA, spol. s r.o.", shop.getName());
+        assertEquals("Letenske namesti 38/7, 170 00 Praha 7", shop.getAddress());
     }
 
     @Test

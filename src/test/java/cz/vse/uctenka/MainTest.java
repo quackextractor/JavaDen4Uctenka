@@ -42,7 +42,7 @@ class MainTest {
     @Test
     void printsReceipt() {
         assertEquals(0, run("Rohlik\n3\n3,50\n\n20\n"));
-        assertTrue(out.toString().contains("Trafika U Rohu"));
+        assertTrue(out.toString().contains("BILLA, spol. s r.o."));
         assertTrue(out.toString().contains("Vraceno"));
     }
 

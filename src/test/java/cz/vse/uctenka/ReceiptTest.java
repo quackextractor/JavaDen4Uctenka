@@ -65,6 +65,12 @@ class ReceiptTest {
     }
 
     @Test
+    void hugeAmountDoesNotCrash() {
+        BigDecimal paid = new BigDecimal("1" + "0".repeat(40));
+        assertTrue(sample().print(time, paid, "1.0.0").contains(Receipt.money(paid)));
+    }
+
+    @Test
     void rowsAlignRight() {
         String text = sample().print(time, new BigDecimal("35.40"), "1.0.0");
         for (String line : text.split("\n")) {

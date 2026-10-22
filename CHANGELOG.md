@@ -7,6 +7,17 @@ a projekt dodrzuje [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+### Changed
+
+- Obchod v `obchod.properties` je BILLA, Letenske namesti 38/7, Praha 7 (LostSoul).
+- `Main` rozdelen do pomocnych metod (LostSoul).
+
+### Fixed
+
+- Castka bere jen cifry 0-9, bez znamenka a s cislem pred i za desetinnou carkou (LostSoul).
+- Prilis dlouha castka uz neshodi tisk uctenky (LostSoul).
+- Platbu jde zadat i kdyz ma celkem vic nez 15 cifer (LostSoul).
+
 ## [0.5.0] - 2026-10-22
 
 ### Changed

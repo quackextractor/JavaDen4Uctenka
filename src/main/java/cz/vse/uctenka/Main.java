@@ -23,38 +23,53 @@ public class Main {
         String version = version();
         System.out.println("Uctenka v" + version);
 
-        Path file = Path.of(args.length > 0 ? args[0] : "obchod.properties");
+        Path file = shopFile(args);
         try {
             Shop shop = Shop.load(file);
-            Receipt receipt = new Receipt(shop);
-            ReceiptReader reader = new ReceiptReader(in, System.out);
-
-            if (!reader.readItems(receipt)) {
-                System.out.println();
-                System.out.println("Vstup skoncil, uctenka se netiskne.");
-                return 1;
-            }
-            if (receipt.getItems().isEmpty()) {
-                System.out.println();
-                System.out.println("Zadna polozka, uctenka se netiskne.");
-                return 1;
-            }
-            BigDecimal paid = reader.readPaid(receipt.total());
-            if (paid == null) {
-                System.out.println();
-                System.out.println("Platba nebyla zadana, uctenka se netiskne.");
-                return 1;
-            }
-            System.out.println();
-            System.out.print(receipt.print(LocalDateTime.now(), paid, version));
-            return 0;
+            return checkout(shop, new ReceiptReader(in, System.out), version);
         } catch (NoSuchFileException e) {
-            System.err.println("Soubor obchodu nenalezen: " + file.toAbsolutePath());
+            return error("Soubor obchodu nenalezen: " + file.toAbsolutePath());
         } catch (IOException e) {
-            System.err.println("Chyba cteni: " + e.getMessage());
+            return error("Chyba cteni: " + e.getMessage());
         } catch (IllegalArgumentException e) {
-            System.err.println("Chyba: " + e.getMessage());
+            return error("Chyba: " + e.getMessage());
         }
+    }
+
+    private static Path shopFile(String[] args) {
+        return Path.of(args.length > 0 ? args[0] : "obchod.properties");
+    }
+
+    /**
+     * Nacte nakup a platbu a vytiskne uctenku.
+     *
+     * @return 0 kdyz se uctenka vytiskla, jinak 1
+     */
+    private static int checkout(Shop shop, ReceiptReader reader, String version) throws IOException {
+        Receipt receipt = new Receipt(shop);
+        if (!reader.readItems(receipt)) {
+            return cancel("Vstup skoncil");
+        }
+        if (receipt.getItems().isEmpty()) {
+            return cancel("Zadna polozka");
+        }
+        BigDecimal paid = reader.readPaid(receipt.total());
+        if (paid == null) {
+            return cancel("Platba nebyla zadana");
+        }
+        System.out.println();
+        System.out.print(receipt.print(LocalDateTime.now(), paid, version));
+        return 0;
+    }
+
+    private static int cancel(String reason) {
+        System.out.println();
+        System.out.println(reason + ", uctenka se netiskne.");
+        return 1;
+    }
+
+    private static int error(String message) {
+        System.err.println(message);
         return 1;
     }
 
