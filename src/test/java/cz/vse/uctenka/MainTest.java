@@ -9,7 +9,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.StringReader;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MainTest {
     private final PrintStream originalOut = System.out;

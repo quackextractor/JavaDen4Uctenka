@@ -2,11 +2,7 @@ package cz.vse.uctenka;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.io.StringReader;
+import java.io.*;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;

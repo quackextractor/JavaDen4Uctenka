@@ -23,6 +23,27 @@ public class Receipt {
         this.shop = shop;
     }
 
+    static String money(BigDecimal value) {
+        return String.format(Locale.forLanguageTag("cs-CZ"), "%.2f", value);
+    }
+
+    private static void row(StringBuilder sb, String left, String right) {
+        left = cut(left, WIDTH - right.length() - 1);
+        sb.append(left).append(" ".repeat(WIDTH - left.length() - right.length())).append(right).append('\n');
+    }
+
+    private static void center(StringBuilder sb, String text) {
+        if (text.isEmpty()) {
+            return;
+        }
+        text = cut(text, WIDTH);
+        sb.append(" ".repeat((WIDTH - text.length()) / 2)).append(text).append('\n');
+    }
+
+    private static String cut(String text, int max) {
+        return text.length() <= max ? text : text.substring(0, max);
+    }
+
     public void add(Item item) {
         items.add(item);
     }
@@ -91,26 +112,5 @@ public class Receipt {
         center(sb, shop.getFooter());
         center(sb, "Uctenka v" + version);
         return sb.toString();
-    }
-
-    static String money(BigDecimal value) {
-        return String.format(Locale.forLanguageTag("cs-CZ"), "%.2f", value);
-    }
-
-    private static void row(StringBuilder sb, String left, String right) {
-        left = cut(left, WIDTH - right.length() - 1);
-        sb.append(left).append(" ".repeat(WIDTH - left.length() - right.length())).append(right).append('\n');
-    }
-
-    private static void center(StringBuilder sb, String text) {
-        if (text.isEmpty()) {
-            return;
-        }
-        text = cut(text, WIDTH);
-        sb.append(" ".repeat((WIDTH - text.length()) / 2)).append(text).append('\n');
-    }
-
-    private static String cut(String text, int max) {
-        return text.length() <= max ? text : text.substring(0, max);
     }
 }
