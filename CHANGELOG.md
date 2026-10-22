@@ -11,6 +11,11 @@ a projekt dodrzuje [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.ht
 
 - Obchod v `obchod.properties` je BILLA, Letenske namesti 38/7, Praha 7 (LostSoul).
 - `Main` rozdelen do pomocnych metod (LostSoul).
+- Beh programu presunut z `Main` do nove tridy `App`, `Main` jen spousti (LostSoul).
+
+### Removed
+
+- Argument s cestou k souboru obchodu, obchod se cte vzdy z `obchod.properties` (LostSoul).
 
 ### Fixed
 

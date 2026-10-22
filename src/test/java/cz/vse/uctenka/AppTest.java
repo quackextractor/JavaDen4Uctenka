@@ -8,11 +8,12 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.StringReader;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class MainTest {
+class AppTest {
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -30,13 +31,17 @@ class MainTest {
         System.setErr(originalErr);
     }
 
-    private int run(String input, String... args) {
-        return Main.run(args, new BufferedReader(new StringReader(input)));
+    private int run(String input) {
+        return run(input, "obchod.properties");
+    }
+
+    private int run(String input, String file) {
+        return App.run(Path.of(file), new BufferedReader(new StringReader(input)));
     }
 
     @Test
     void versionComesFromPom() {
-        assertTrue(Main.version().matches("\\d+\\.\\d+\\.\\d+.*"), Main.version());
+        assertTrue(App.version().matches("\\d+\\.\\d+\\.\\d+.*"), App.version());
     }
 
     @Test
