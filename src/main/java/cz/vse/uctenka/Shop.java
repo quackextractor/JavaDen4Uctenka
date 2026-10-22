@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * Udaje o obchodu, ktere se na uctence opakuji.
  */
-public final class Shop {
+public class Shop {
     private final String name;
     private final String address;
     private final String ico;

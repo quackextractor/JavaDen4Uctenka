@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * Jedna polozka nakupu.
  */
-public final class Item {
+public class Item {
     private final String name;
     private final int quantity;
     private final BigDecimal unitPrice;

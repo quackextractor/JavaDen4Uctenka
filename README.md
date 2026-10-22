@@ -15,7 +15,7 @@ Potreba je Java 17 nebo novejsi.
 
 ```
 mvnw.cmd package
-java -jar target/uctenka-1.0.0.jar obchod.properties
+java -jar target/uctenka-0.5.0.jar obchod.properties
 ```
 
 Na Linuxu a macOS se misto `mvnw.cmd` pouzije `sh mvnw`. Maven neni potreba instalovat, stahne ho wrapper.
