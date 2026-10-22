@@ -43,6 +43,13 @@ class ReceiptReaderTest {
     }
 
     @Test
+    void acceptsMaxQuantity() throws IOException {
+        Receipt receipt = new Receipt(shop);
+        assertTrue(reader("Rohlik\n999\n1\n\n").readItems(receipt));
+        assertEquals(999, receipt.getItems().get(0).quantity());
+    }
+
+    @Test
     void asksAgainOnBadInput() throws IOException {
         Receipt receipt = new Receipt(shop);
         assertTrue(reader("Rohlik\nx\n-2\n1000\n2\n0\nabc\n4\n\n").readItems(receipt));
