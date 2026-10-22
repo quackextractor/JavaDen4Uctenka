@@ -90,14 +90,18 @@ public class ReceiptReader {
     }
 
     /**
-     * Prevede text na castku, bere carku i tecku.
+     * Prevede text na castku, bere carku i tecku. Exponent neni povolen.
      *
      * @param maxDigits max. pocet cifer pred carkou
      * @return castka nebo null kdyz to neni cislo s max. 2 desetinnymi misty
      */
     static BigDecimal parseMoney(String text, int maxDigits) {
+        String number = text.trim().replace(',', '.');
+        if (number.contains("e") || number.contains("E")) {
+            return null;
+        }
         try {
-            BigDecimal value = new BigDecimal(text.trim().replace(',', '.'));
+            BigDecimal value = new BigDecimal(number);
             boolean ok = value.scale() <= 2 && value.precision() - value.scale() <= maxDigits;
             return ok ? value : null;
         } catch (NumberFormatException e) {

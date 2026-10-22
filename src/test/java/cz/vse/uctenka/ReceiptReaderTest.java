@@ -26,6 +26,8 @@ class ReceiptReaderTest {
         assertNull(ReceiptReader.parseMoney("abc", 7));
         assertNull(ReceiptReader.parseMoney("1.234", 7));
         assertNull(ReceiptReader.parseMoney("", 7));
+        assertNull(ReceiptReader.parseMoney("1e2", 7));
+        assertNull(ReceiptReader.parseMoney("1E+2", 7));
         assertNull(ReceiptReader.parseMoney("1e50", 7));
         assertNull(ReceiptReader.parseMoney("12345678", 7));
         assertEquals(new BigDecimal("9999999.99"), ReceiptReader.parseMoney("9999999,99", 7));
