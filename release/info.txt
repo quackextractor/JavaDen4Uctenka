@@ -45,3 +45,30 @@ Your own shop
   Open obchod.properties in Notepad and change the values after "=":
   nazev (name), adresa (address), ico and dic (company IDs),
   dph (VAT rate in %), paticka (text at the bottom).
+
+
+---------------------------------------------------------------------
+Algerian Arabic (الدارجة الجزائرية)
+---------------------------------------------------------------------
+
+الوصل
+=====
+
+البرنامج يطبع وصل كيما تاع الحانوت.
+لازمك Java 17 ولا جديدة عليها: https://adoptium.net
+
+التشغيل
+  Windows: دير double-click على uctenka.cmd
+  وين ما كان: java -jar uctenka.jar  (شغّلو في الدوسي اللي فيه هذا الفيشي)
+
+كيفاش تدير وصل
+  1. اكتب اسم السلعة وانقر Enter.
+  2. اكتب شحال من حبة (غير Enter = حبة وحدة).
+  3. اكتب السومة تاع الحبة، مثلا 24,90.
+  4. زيد السلع لخرين بنفس الطريقة. كي تكمل، انقر Enter في سطر فارغ.
+  5. اكتب شحال تخلّص. الوصل يتطبع.
+
+الحانوت تاعك
+  حل obchod.properties في Notepad (Bloc-notes) وبدّل واش كاين من بعد "=":
+  nazev (الاسم)، adresa (العنوان)، ico و dic (أرقام الشركة)،
+  dph (نسبة TVA بـ %)، paticka (الكتابة اللي لتحت).
