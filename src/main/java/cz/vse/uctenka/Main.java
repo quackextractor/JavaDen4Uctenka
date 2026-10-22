@@ -29,7 +29,12 @@ public class Main {
             Receipt receipt = new Receipt(shop);
             ReceiptReader reader = new ReceiptReader(in, System.out);
 
-            if (!reader.readItems(receipt) || receipt.getItems().isEmpty()) {
+            if (!reader.readItems(receipt)) {
+                System.out.println();
+                System.out.println("Vstup skoncil, uctenka se netiskne.");
+                return 1;
+            }
+            if (receipt.getItems().isEmpty()) {
                 System.out.println();
                 System.out.println("Zadna polozka, uctenka se netiskne.");
                 return 1;

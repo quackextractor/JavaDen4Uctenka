@@ -52,6 +52,12 @@ class MainTest {
     }
 
     @Test
+    void interruptedInputFails() {
+        assertEquals(1, run("Rohlik\n1\n5"));
+        assertTrue(out.toString().contains("Vstup skoncil"));
+    }
+
+    @Test
     void noPaymentFails() {
         assertEquals(1, run("Rohlik\n1\n5\n\n"));
         assertTrue(out.toString().contains("Platba nebyla zadana"));
