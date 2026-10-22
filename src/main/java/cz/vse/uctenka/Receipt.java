@@ -43,7 +43,7 @@ public class Receipt {
      * @return DPH obsazena v celkove cene
      */
     public BigDecimal vat() {
-        BigDecimal rate = BigDecimal.valueOf(shop.vatRate());
+        BigDecimal rate = BigDecimal.valueOf(shop.getVatRate());
         return total().multiply(rate).divide(rate.add(BigDecimal.valueOf(100)), 2, RoundingMode.HALF_UP);
     }
 
@@ -64,31 +64,31 @@ public class Receipt {
         StringBuilder sb = new StringBuilder();
 
         sb.append(doubleLine).append('\n');
-        center(sb, shop.name());
-        center(sb, shop.address());
-        String ids = (shop.ico().isEmpty() ? "" : "ICO: " + shop.ico() + "  ")
-                + (shop.dic().isEmpty() ? "" : "DIC: " + shop.dic());
+        center(sb, shop.getName());
+        center(sb, shop.getAddress());
+        String ids = (shop.getIco().isEmpty() ? "" : "ICO: " + shop.getIco() + "  ")
+                + (shop.getDic().isEmpty() ? "" : "DIC: " + shop.getDic());
         center(sb, ids.trim());
         sb.append(doubleLine).append('\n');
         sb.append("Datum: ").append(time.format(DATE)).append('\n');
         sb.append(line).append('\n');
 
         for (Item item : items) {
-            if (item.quantity() == 1) {
-                row(sb, item.name(), money(item.total()));
+            if (item.getQuantity() == 1) {
+                row(sb, item.getName(), money(item.total()));
             } else {
-                sb.append(cut(item.name(), WIDTH)).append('\n');
-                row(sb, "  " + item.quantity() + " x " + money(item.unitPrice()), money(item.total()));
+                sb.append(cut(item.getName(), WIDTH)).append('\n');
+                row(sb, "  " + item.getQuantity() + " x " + money(item.getUnitPrice()), money(item.total()));
             }
         }
 
         sb.append(line).append('\n');
         row(sb, "CELKEM", money(total()) + " Kc");
-        row(sb, "z toho DPH " + shop.vatRate() + " %", money(vat()));
+        row(sb, "z toho DPH " + shop.getVatRate() + " %", money(vat()));
         row(sb, "Zaplaceno", money(paid));
         row(sb, "Vraceno", money(paid.subtract(total())));
         sb.append(doubleLine).append('\n');
-        center(sb, shop.footer());
+        center(sb, shop.getFooter());
         center(sb, "Uctenka v" + version);
         return sb.toString();
     }

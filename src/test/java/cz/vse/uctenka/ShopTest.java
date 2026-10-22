@@ -29,13 +29,13 @@ class ShopTest {
     @Test
     void usesDefaults() throws IOException {
         Shop shop = Shop.load(write("nazev=Trafika\n"));
-        assertEquals(21, shop.vatRate());
-        assertEquals("", shop.address());
+        assertEquals(21, shop.getVatRate());
+        assertEquals("", shop.getAddress());
     }
 
     @Test
     void loadsTheBundledFile() throws IOException {
-        assertEquals("Trafika U Rohu", Shop.load(Path.of("obchod.properties")).name());
+        assertEquals("Trafika U Rohu", Shop.load(Path.of("obchod.properties")).getName());
     }
 
     @Test

@@ -5,12 +5,52 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
  * Udaje o obchodu, ktere se na uctence opakuji.
  */
-public record Shop(String name, String address, String ico, String dic, int vatRate, String footer) {
+public final class Shop {
+    private final String name;
+    private final String address;
+    private final String ico;
+    private final String dic;
+    private final int vatRate;
+    private final String footer;
+
+    public Shop(String name, String address, String ico, String dic, int vatRate, String footer) {
+        this.name = name;
+        this.address = address;
+        this.ico = ico;
+        this.dic = dic;
+        this.vatRate = vatRate;
+        this.footer = footer;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getIco() {
+        return ico;
+    }
+
+    public String getDic() {
+        return dic;
+    }
+
+    public int getVatRate() {
+        return vatRate;
+    }
+
+    public String getFooter() {
+        return footer;
+    }
 
     /**
      * Nacte obchod ze souboru .properties.
@@ -46,5 +86,21 @@ public record Shop(String name, String address, String ico, String dic, int vatR
                 p.getProperty("dic", "").trim(),
                 vat,
                 p.getProperty("paticka", "").trim());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Shop other
+                && Objects.equals(name, other.name)
+                && Objects.equals(address, other.address)
+                && Objects.equals(ico, other.ico)
+                && Objects.equals(dic, other.dic)
+                && vatRate == other.vatRate
+                && Objects.equals(footer, other.footer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, address, ico, dic, vatRate, footer);
     }
 }

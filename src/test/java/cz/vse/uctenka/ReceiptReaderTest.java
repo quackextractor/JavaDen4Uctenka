@@ -39,14 +39,14 @@ class ReceiptReaderTest {
         assertTrue(reader("Rohlik\n3\n3,50\nMleko\n\n24.90\n\n").readItems(receipt));
         assertEquals(2, receipt.getItems().size());
         assertEquals(new Item("Rohlik", 3, new BigDecimal("3.50")), receipt.getItems().get(0));
-        assertEquals(1, receipt.getItems().get(1).quantity());
+        assertEquals(1, receipt.getItems().get(1).getQuantity());
     }
 
     @Test
     void acceptsMaxQuantity() throws IOException {
         Receipt receipt = new Receipt(shop);
         assertTrue(reader("Rohlik\n999\n1\n\n").readItems(receipt));
-        assertEquals(999, receipt.getItems().get(0).quantity());
+        assertEquals(999, receipt.getItems().get(0).getQuantity());
     }
 
     @Test
