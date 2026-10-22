@@ -1,33 +1,33 @@
-# Uctenka
+# Účtenka
 
-Jednoduchy program pro tisk uctenky z prikazove radky. Aktualni verze je v `pom.xml`.
+Jednoduchý program pro tisk účtenky z příkazové řádky. Aktuální verze je v `pom.xml`.
 
-## Autori
+## Autoři
 
-- Miro Slezak (LostSoul)
-- Natalie Benesova (nataliebenesova07)
-- Klaudia Onderova (f4kfv6z8sb-star)
+- Miro Slezák (LostSoul)
+- Natálie Benešová (nataliebenesova07)
+- Klaudia Onderová (f4kfv6z8sb-star)
 - Vu Anh (VietnameseDelegation)
 
-## Spusteni
+## Spuštění
 
-Potreba je Java 17 nebo novejsi.
+Potřeba je Java 17 nebo novější.
 
 ```
 mvnw.cmd package
 java -jar target/uctenka-0.6.0.jar
 ```
 
-Na Linuxu a macOS se misto `mvnw.cmd` pouzije `sh mvnw`. Maven neni potreba instalovat, stahne ho wrapper.
+Na Linuxu a macOS se místo `mvnw.cmd` použije `sh mvnw`. Maven není potřeba instalovat, stáhne ho wrapper.
 
-Program se zepta na polozky (nazev, pocet, cena za kus). Prazdny nazev seznam ukonci, pak se zada zaplacena castka.
+Program se zeptá na položky (název, počet, cena za kus). Prázdný název seznam ukončí, pak se zadá zaplacená částka.
 
-## Udaje obchodu
+## Údaje obchodu
 
-Udaje, ktere se na uctence opakuji, jsou v `obchod.properties` (UTF-8): `nazev` (povinny), `adresa`, `ico`, `dic`, `dph` (sazba v %, vychozi 21), `paticka`. Ceny se zadavaji vcetne DPH.
+Údaje, které se na účtence opakují, jsou v `obchod.properties` (UTF-8): `nazev` (povinný), `adresa`, `ico`, `dic`, `dph` (sazba v %, výchozí 21), `paticka`. Ceny se zadávají včetně DPH.
 
-## Nova verze
+## Nová verze
 
-1. Zmenit `<version>` v `pom.xml` (semver: oprava = patch, nova funkce = minor, nekompatibilni zmena = major).
-2. `mvnw.cmd clean package` spusti testy a vytvori `target/uctenka-X.Y.Z.jar`.
-3. Do `CHANGELOG.md` pridat sekci `## [X.Y.Z]`, commit a push do `master`. GitHub Actions vytvori tag `vX.Y.Z` a release se zipem (jar, `obchod.properties`, `release/info.txt`, `release/uctenka.cmd`).
+1. Změnit `<version>` v `pom.xml` (semver: oprava = patch, nová funkce = minor, nekompatibilní změna = major).
+2. `mvnw.cmd clean package` spustí testy a vytvoří `target/uctenka-X.Y.Z.jar`.
+3. Do `CHANGELOG.md` přidat sekci `## [X.Y.Z]`, commit a push do `master`. GitHub Actions vytvoří tag `vX.Y.Z` a release se zipem (jar, `obchod.properties`, `release/info.txt`, `release/uctenka.cmd`).
