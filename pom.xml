@@ -6,7 +6,7 @@
 
     <groupId>cz.vse</groupId>
     <artifactId>uctenka</artifactId>
-    <version>0.5.0</version>
+    <version>0.6.0</version>
     <name>Uctenka</name>
 
     <properties>

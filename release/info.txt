@@ -1,0 +1,47 @@
+Účtenka
+=======
+
+Program vytiskne účtenku jako z obchodu.
+Potřebujete Javu 17 nebo novější: https://adoptium.net
+
+Spuštění
+  Windows: dvakrát klikněte na uctenka.cmd
+  Jinde:   java -jar uctenka.jar  (spusťte ve složce s tímto souborem)
+
+Jak vytvořit účtenku
+  1. Napište název zboží a stiskněte Enter.
+  2. Napište počet kusů (jen Enter = 1 kus).
+  3. Napište cenu za kus, např. 24,90.
+  4. Další zboží zadejte stejně. Až máte vše, stiskněte Enter na prázdném řádku.
+  5. Napište, kolik se zaplatilo. Účtenka se vytiskne.
+
+Vlastní obchod
+  Otevřete obchod.properties v Poznámkovém bloku a přepište údaje za "=":
+  nazev, adresa, ico, dic, dph (sazba v %), paticka (text dole).
+
+
+---------------------------------------------------------------------
+English
+---------------------------------------------------------------------
+
+Receipt
+=======
+
+The program prints a receipt like the ones you get in a shop.
+You need Java 17 or newer: https://adoptium.net
+
+Running
+  Windows:  double-click uctenka.cmd
+  Anywhere: java -jar uctenka.jar  (run it in the folder with this file)
+
+How to make a receipt
+  1. Type the item name and press Enter.
+  2. Type the quantity (just Enter = 1 piece).
+  3. Type the price per piece, e.g. 24,90.
+  4. Add more items the same way. When done, press Enter on an empty line.
+  5. Type how much was paid. The receipt is printed.
+
+Your own shop
+  Open obchod.properties in Notepad and change the values after "=":
+  nazev (name), adresa (address), ico and dic (company IDs),
+  dph (VAT rate in %), paticka (text at the bottom).

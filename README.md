@@ -15,7 +15,7 @@ Potreba je Java 17 nebo novejsi.
 
 ```
 mvnw.cmd package
-java -jar target/uctenka-0.5.0.jar
+java -jar target/uctenka-0.6.0.jar
 ```
 
 Na Linuxu a macOS se misto `mvnw.cmd` pouzije `sh mvnw`. Maven neni potreba instalovat, stahne ho wrapper.
@@ -30,4 +30,4 @@ Udaje, ktere se na uctence opakuji, jsou v `obchod.properties` (UTF-8): `nazev` 
 
 1. Zmenit `<version>` v `pom.xml` (semver: oprava = patch, nova funkce = minor, nekompatibilni zmena = major).
 2. `mvnw.cmd clean package` spusti testy a vytvori `target/uctenka-X.Y.Z.jar`.
-3. Commit, tag `vX.Y.Z` a push.
+3. Do `CHANGELOG.md` pridat sekci `## [X.Y.Z]`, commit a push do `master`. GitHub Actions vytvori tag `vX.Y.Z` a release se zipem (jar, `obchod.properties`, `release/info.txt`, `release/uctenka.cmd`).

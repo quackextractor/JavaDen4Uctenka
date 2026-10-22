@@ -1,0 +1,96 @@
+name: release
+
+# gate     every push and pull request: build and run the tests.
+# release  push to master only: if no release exists for the version in pom.xml, tag it vX.Y.Z and
+#          publish the jar and a zip ready to run, with that version's CHANGELOG section as the notes.
+#
+# A push that does not change the version releases nothing, so a release happens by bumping
+# <version> in pom.xml and adding its section to CHANGELOG.md.
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+
+# Two pushes close together must not both decide no release exists and both try to create one.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Build and test
+        run: sh mvnw -B verify
+
+  release:
+    needs: gate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Read the version
+        id: version
+        run: |
+          version=$(sh mvnw -q help:evaluate -Dexpression=project.version -DforceStdout)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "the version is $version"
+
+      - name: Create the release, if it does not exist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          tag="v$VERSION"
+          if gh release view "$tag" > /dev/null 2>&1; then
+            echo "[INFO] release $tag already exists, nothing to do."
+            exit 0
+          fi
+
+          # The notes are this version's section of CHANGELOG.md, up to the next heading or the links.
+          awk -v head="## [$VERSION]" '
+            index($0, head) == 1 { found = 1; next }
+            found && (/^## \[/ || /^\[[^]]+\]: /) { exit }
+            found { print }
+          ' CHANGELOG.md > notes.md
+          if ! grep -q '[^[:space:]]' notes.md; then
+            echo "[ERROR] CHANGELOG.md has no section for $VERSION."
+            exit 1
+          fi
+
+          # The tests already passed in the gate job.
+          sh mvnw -B -DskipTests package
+
+          dist="uctenka-$VERSION"
+          mkdir "$dist"
+          cp "target/uctenka-$VERSION.jar" "$dist/uctenka.jar"
+          cp obchod.properties release/info.txt release/uctenka.cmd "$dist/"
+          zip -r "$dist.zip" "$dist"
+
+          git tag "$tag" "$GITHUB_SHA"
+          git push origin "refs/tags/$tag"
+          gh release create "$tag" \
+            --title "Uctenka $tag" \
+            --notes-file notes.md \
+            --verify-tag \
+            "$dist.zip" "$dist/uctenka.jar"
+
+          echo "[OK] released $tag"

@@ -7,6 +7,12 @@ a projekt dodrzuje [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-22
+
+### Added
+
+- Push do `master` s novou verzi vytvori release se zipem k primemu spusteni a navodem `info.txt` (LostSoul).
+
 ### Changed
 
 - Obchod v `obchod.properties` je BILLA, Letenske namesti 38/7, Praha 7 (LostSoul).
@@ -101,7 +107,8 @@ a projekt dodrzuje [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.ht
 
 - Zakladni struktura projektu s Mavenem (LostSoul).
 
-[Unreleased]: https://github.com/quackextractor/JavaDen4Uctenka/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/quackextractor/JavaDen4Uctenka/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/quackextractor/JavaDen4Uctenka/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/quackextractor/JavaDen4Uctenka/compare/v0.4.8...v0.5.0
 [0.4.8]: https://github.com/quackextractor/JavaDen4Uctenka/compare/v0.4.7...v0.4.8
 [0.4.7]: https://github.com/quackextractor/JavaDen4Uctenka/compare/v0.4.6...v0.4.7
